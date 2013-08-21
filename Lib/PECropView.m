@@ -296,6 +296,26 @@ static const CGFloat MarginRight = MarginLeft;
     return self.imageView.transform;
 }
 
+- (CGFloat)rotationAngle
+{
+    CGAffineTransform rotation = self.imageView.transform;
+    return atan2f(rotation.b, rotation.a);
+}
+
+- (void)setRotationAngle:(CGFloat)rotationAngle
+{
+    self.imageView.transform = CGAffineTransformMakeRotation(rotationAngle);
+}
+
+- (void)setRotationAngle:(CGFloat)rotationAngle snap:(BOOL)snap
+{
+    if (snap)
+    {
+        rotationAngle = nearbyintf(rotationAngle / M_PI_2) * M_PI_2;
+    }
+    self.rotationAngle = rotationAngle;
+}
+
 - (CGRect)cappedCropRectInImageRectWithCropRectView:(PECropRectView *)cropRectView
 {
     CGRect cropRect = cropRectView.frame;
